@@ -12,8 +12,8 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-app.use('/quests', require('./routes/questRoutes'))
-app.use('/users', require('./routes/userRoutes'))
+app.use('/api/quests', require('./routes/questRoutes'))
+app.use('/api/users', require('./routes/userRoutes'))
 
 app.use(errorHandler)
 
