@@ -1,0 +1,50 @@
+.dashboard {
+    display: flex;
+    width: 80vw;
+    height: 60vh;
+    margin: auto;
+    background-color: var(--background);
+    border: 1rem solid var(--tertiary);
+    border-radius: 1rem;
+}
+
+.dashboard h2 {
+    text-align: center;
+}
+
+.dashboard-side {
+    flex: 1;
+    color: var(--quarternary-text);
+    background-color: var(--secondary);
+}
+
+.dashboard-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: var(--primary-text);
+    width: 50%;
+    gap: 1rem;
+    background-color: var(--tertiary);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
+    border-radius: 2rem;
+    font-size: large;
+}
+
+.dashboard-btn-circle {
+    color: var(--quarternary-text);
+    background-color: var(--secondary);
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.dashboard-main {
+    flex: 3.5;
+    color: var(--secondary-text);
+}
