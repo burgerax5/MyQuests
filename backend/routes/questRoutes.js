@@ -2,12 +2,12 @@ const express = require('express')
 const router = express.Router()
 
 const { getQuests, addQuest, editQuest, deleteQuest } = require('../controllers/questController')
+const { protect } = require('../middleware/offMiddleware')
 
-
-router.get('/', getQuests)
-router.post('/', addQuest)
-router.put('/:id', editQuest)
-router.delete('/:id', deleteQuest)
+router.get('/', protect, getQuests)
+router.post('/', protect, addQuest)
+router.put('/:id', protect, editQuest)
+router.delete('/:id', protect, deleteQuest)
 
 
 module.exports = router

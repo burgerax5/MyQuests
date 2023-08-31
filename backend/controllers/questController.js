@@ -1,12 +1,13 @@
 const asyncHandler = require('express-async-handler')
 const Quest = require('../models/questModel')
+const User = require('../models/userModel')
 
 
 // @desc    Get Quests
 // @route   GET /quests
 // @access  Private
 const getQuests = asyncHandler(async (req, res) => {
-    const quests = await Quest.find()
+    const quests = await Quest.find({ user: req.user.id })
 
     res.status(200).json(quests)
 })
@@ -22,7 +23,11 @@ const addQuest = asyncHandler(async (req, res) => {
     }
 
     const quest = await Quest.create({
-        title: req.body.title
+        title: req.body.title,
+        user: req.user.id,
+        category: req.body.category,
+        steps: req.body.steps,
+        description: req.body.description
     })
 
     res.status(200).json(quest)
@@ -34,6 +39,19 @@ const addQuest = asyncHandler(async (req, res) => {
 // @access  Private
 const editQuest = asyncHandler(async (req, res) => {
     const quest = await Quest.findById(req.params.id)
+    const user = await User.findById(req.user.id)
+
+    // Check if user exists
+    if (!user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    // Check the ownership of the quest
+    if (quest.user.toString() !== user.id) {
+        res.status(401)
+        throw new Error('User not authorized')
+    }
 
     if (!quest) {
         res.status(400)
@@ -53,6 +71,19 @@ const editQuest = asyncHandler(async (req, res) => {
 // @access  Private
 const deleteQuest = asyncHandler(async (req, res) => {
     const quest = await Quest.findById(req.params.id)
+    const user = await User.findById(req.user.id)
+
+    // Check if user exists
+    if (!user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    // Check the ownership of the quest
+    if (quest.user.toString() !== user.id) {
+        res.status(401)
+        throw new Error('User not authorized')
+    }
 
     if (!quest) {
         res.status(400)
