@@ -33,10 +33,31 @@
     color: var(--primary-text);
     padding: .75rem .5rem;
     font-size: large;
-    width: 50%;
+    width: 100%;
     border-radius: 2rem;
     border: none;
     cursor: pointer;
+    position: relative;
+}
+
+.login-book .form-btn-circle {
+    height: 30px;
+    width: 30px;
+    background-color: var(--background);
+    border-radius: 50%;
+    position: absolute;
+    top: 17.5%;
+}
+
+.login-book .confirm-circle {
+    height: 15px;
+    width: 15px;
+    background-color: transparent;
+    border: 3px solid goldenrod;
+    border-radius: 50%;
+    position: absolute;
+    top: 14.5%;
+    left: 14.5%;
 }
 
 .login-book a {

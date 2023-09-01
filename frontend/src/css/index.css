@@ -73,7 +73,8 @@ header a {
 }
 
 header .quests,
-header .login {
+header .login,
+header.logout {
   background-color: var(--background);
   border: 3px solid inset var(--tertiary);
   display: flex;
@@ -98,19 +99,25 @@ header .quests {
   width: var(--nav-icon);
 }
 
-header .login {
+header .logout-btn {
+  height: 100%;
+}
+
+header .login, header .logout .logout-btn {
   margin-right: 2rem;
   border-radius: 1.5rem;
   padding: .5rem 2rem;
   font-size: large;
   font-weight: bold;
+  cursor: pointer;
+  color: var(--quarternary-text);
 }
 
 header svg {
   font-size: x-large;
 }
 
-header .login a {
+header .login a, header .logout  .logout-btn {
   display: flex;
   align-items: center;
   gap: 1rem;
