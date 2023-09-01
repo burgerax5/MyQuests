@@ -39,16 +39,15 @@ const addQuest = asyncHandler(async (req, res) => {
 // @access  Private
 const editQuest = asyncHandler(async (req, res) => {
     const quest = await Quest.findById(req.params.id)
-    const user = await User.findById(req.user.id)
 
     // Check if user exists
-    if (!user) {
+    if (!req.user) {
         res.status(401)
         throw new Error('User not found')
     }
 
     // Check the ownership of the quest
-    if (quest.user.toString() !== user.id) {
+    if (quest.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('User not authorized')
     }
@@ -71,16 +70,15 @@ const editQuest = asyncHandler(async (req, res) => {
 // @access  Private
 const deleteQuest = asyncHandler(async (req, res) => {
     const quest = await Quest.findById(req.params.id)
-    const user = await User.findById(req.user.id)
 
     // Check if user exists
-    if (!user) {
+    if (!req.user) {
         res.status(401)
         throw new Error('User not found')
     }
 
     // Check the ownership of the quest
-    if (quest.user.toString() !== user.id) {
+    if (quest.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('User not authorized')
     }

@@ -60,8 +60,17 @@
     left: 14.5%;
 }
 
-.login-book a {
+.login-book .form-btn:hover {
+    background-color: rgb(48, 48, 48);
+}
+
+.login-book > a {
     margin-top: 1rem;
     text-decoration: none;
+    color: var(--tertiary-text);
+}
+
+.login-book > a:hover {
     color: var(--secondary-text);
+    filter: brightness(.75);
 }

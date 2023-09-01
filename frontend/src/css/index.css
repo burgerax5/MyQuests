@@ -113,6 +113,12 @@ header .login, header .logout .logout-btn {
   color: var(--quarternary-text);
 }
 
+header .login:hover, 
+header .logout-btn:hover,
+header .quests:hover {
+  background-color: var(--secondary);
+}
+
 header svg {
   font-size: x-large;
 }
