@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className="container" style={{ background: `url('${BackgroundImage}') left top no-repeat` }}>
+        <div className="container">
           <Header />
           <Routes>
             <Route path='/' element={<Home />} />

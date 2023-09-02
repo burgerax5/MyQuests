@@ -43,7 +43,7 @@
 .login-book .form-btn-circle {
     height: 30px;
     width: 30px;
-    background-color: var(--background);
+    background-color: rgb(36, 36, 36);
     border-radius: 50%;
     position: absolute;
     top: 17.5%;
@@ -53,11 +53,12 @@
     height: 15px;
     width: 15px;
     background-color: transparent;
-    border: 3px solid goldenrod;
+    border: 2px solid goldenrod;
     border-radius: 50%;
     position: absolute;
-    top: 14.5%;
-    left: 14.5%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .login-book .form-btn:hover {
