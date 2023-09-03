@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
+import QuestNavbar from '../components/QuestNavbar'
+
 function Quests() {
   const navigate = useNavigate()
 
@@ -14,11 +16,11 @@ function Quests() {
   }, [user, navigate])
 
   return (
-    <>
-      <section>
-        {/* <h1>Welcome {user.username}</h1> */}
-      </section>
-    </>
+    <div className="quests-container">
+      { user && <>
+        <QuestNavbar />
+      </> }
+    </div>
   )
 }
 

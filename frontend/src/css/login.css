@@ -13,6 +13,10 @@
     margin-right: auto;
 }
 
+.login-book h1 {
+    margin-bottom: 1rem;
+}
+
 .login-book .form {
     display: flex;
     flex-direction: column;

@@ -3,7 +3,8 @@
   --background: #F2EEE8;
   --secondary: #E6DCCC;
   --tertiary: #4A5366;
-  --accent: #858789;
+  --accent: #CEBF98;
+  --primary: #394154;
   --input-bg: #E0D6CB;
 
   /* Text colours */
@@ -13,8 +14,15 @@
   --quarternary-text: #4A5366;
 
   /* Sizes */
-  --nav-height: 56px;
-  --nav-icon: 45px;
+  --nav-height: 5rem;
+  --nav-icon: 3rem;
+  --quest-nav-gap: 3rem;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body,
@@ -31,7 +39,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--primary-text);
-  background-image: url('../images/mondstadt_bg.jpg');
+  background-image: url('../images/angels_share.png');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 code {
@@ -43,6 +54,7 @@ code {
 .container {
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 header {
@@ -52,7 +64,6 @@ header {
   width: 100%;
   height: var(--nav-height);
   gap: 1rem;
-  margin-bottom: 1rem;
 }
 
 header ul {
@@ -73,15 +84,15 @@ header a {
   place-items: center;
 }
 
-header .quests,
-header .login,
-header.logout {
-  background-color: var(--background);
-  border: 3px solid inset var(--tertiary);
+header :is(.quests, .login, .logout) {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+}
+
+header .login {
+  background-color: var(--background);
   border: 2px solid var(--tertiary);
 }
 
@@ -89,7 +100,7 @@ header .logo {
   margin-left: 2rem;
   color: var(--primary-text);
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-size: 40px;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
   font-style: normal;
   font-weight: 700;
   line-height: 119%;  
@@ -100,12 +111,17 @@ header .quests {
   width: var(--nav-icon);
 }
 
+header .quests img {
+  width: 100%;
+  height: 100%;
+}
+
 header .logout-btn {
   height: 100%;
   background-color: var(--background);
 }
 
-header .login, header .logout .logout-btn {
+header :is(.login, .logout-btn) {
   margin-right: 2rem;
   border-radius: 1.5rem;
   padding: .5rem 2rem;
@@ -115,17 +131,15 @@ header .login, header .logout .logout-btn {
   color: var(--quarternary-text);
 }
 
-header .login:hover, 
-header .logout-btn:hover,
-header .quests:hover {
-  background-color: var(--secondary);
+header :is(.login:hover, .logout-btn:hover, .quests:hover) {
+  filter: drop-shadow(0px 0px 3px white);
 }
 
 header svg {
   font-size: x-large;
 }
 
-header .login a, header .logout  .logout-btn {
+header :is(.login a, .logout  .logout-btn) {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -176,6 +190,57 @@ header .hamburger::after {
   border-radius: 1rem;
 }
 
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: clamp(10rem, 70%, 20rem);
+  height: 100%;
+  background-color: var(--background);
+  z-index: 9999;
+  transform: translateX(100%);
+  transition: transform 250ms;
+  display: none;
+}
+
+.mobile-menu.show {
+  transform: translateX(0);
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 9998;
+  display: none;
+}
+
+.mobile-menu > div:nth-child(1) {
+  height: var(--nav-height);
+  background-color: var(--tertiary);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.mobile-menu .menu-close {
+  background-color: transparent;
+  border: none;
+  color: var(--primary-text);
+  height: 100%;
+  margin-right: 2rem;
+  font-size: 2.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media screen and (max-width: 767px) {
   .header > ul {
     display: none;
@@ -184,10 +249,12 @@ header .hamburger::after {
   .header .hamburger-container {
     display: flex;
   }
-}
 
-@media screen and (max-width: 367px) {
-  header .logo {
-    font-size: x-large;
+  .mobile-menu {
+    display: flex;
+  }
+
+  .overlay {
+    display: block;
   }
 }
