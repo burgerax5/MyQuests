@@ -46,7 +46,7 @@ function Header() {
 
     return (
         <>
-            <header className="header">
+            <header className="nav-header">
                 <div className="home">
                     <Link to='/'>
                         <div className="logo">MyQuests</div>
