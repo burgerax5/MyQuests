@@ -1,44 +1,53 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { FaCaretDown, FaPlusCircle } from 'react-icons/fa'
+import { FaPlusCircle } from 'react-icons/fa'
+import { createQuest } from '../features/quests/questSlice'
+import QuestFormHeader from './QuestFormHeader'
 
 function QuestForm({ handleClose }) {
-
-  const [questData, setQuestData] = useState({
+  const defaultQuestData = {
+    category: "",
     title: "",
     description: "",
     steps: [],
-  })
+  }
+
+  const [questData, setQuestData] = useState(defaultQuestData)
+  const [showDropdown, setShowDropdown] = useState(false)
+
+  const dispatch = useDispatch()
 
   const addStep = () => {
+
+  }
+
+  const onChange = (e) => {
+    setQuestData(oldQuestData => ({
+      ...oldQuestData, 
+      [e.target.name]: e.target.name === "steps" ? [...oldQuestData.steps, e.target.value] : e.target.value
+    }))
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    dispatch(createQuest(questData))
 
   }
 
   return (
     <>
       <div className="dialog">
-        <div className="dialog-header">
-          <h2>Add Quest</h2>
-          <div className="dialog-header-right">
-            <div className="select-category">
-              Commissions
-              <FaCaretDown />
-            </div>
-            {/* <div className="select-options">
-
-            </div> */}
-          </div>
-        </div>
-        <form className="dialog-form">
+        <QuestFormHeader />
+        <form className="dialog-form" onSubmit={onSubmit}>
           <div className="dialog-page">
-            <label htmlFor="quest-name">Quest Name:</label>
-            <input type="text" name="quest_name" />
-            <label htmlFor="quest-description">Description:</label>
-            <textarea placeholder="Describe the quest..." name="quest-description" style={{resize: "none"}}></textarea>
+            <label htmlFor="title">Quest Name:</label>
+            <input type="text" name="title" onChange={onChange}/>
+            <label htmlFor="description" onChange={onChange}>Description:</label>
+            <textarea placeholder="Describe the quest..." name="description" style={{resize: "none"}}></textarea>
           </div>
           <div className="dialog-page">
-            <label htmlFor="quest-step">Steps:</label>
-            <input type="text" name="quest-step" />
+            <label htmlFor="steps">Steps:</label>
+            <input type="text" name="steps" onChange={onChange} />
             <div className="add-step-btn" onClick={addStep}>
               <FaPlusCircle />
             </div>
