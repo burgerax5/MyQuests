@@ -16,6 +16,21 @@ function Quests() {
   const { user } = useSelector((state) => state.auth)
   const { quests, isLoading, isError, message } = useSelector((state) => state.quest)
 
+  const getQuestsByCategory = () => {
+    let questsByCategory = {
+      "Commissions": [],
+      "World Quests": [],
+      "Main Quests": [],
+      "Important": []
+    }
+
+    quests.map(quest => {
+      questsByCategory[quest.category].push(quest)
+    })
+
+    return questsByCategory
+  }
+
   const categories = ['In Progress', 'Commissions', 'World Quests', 'Main Quests', 'Important']
   const [selectedCategory, setSelectedCategory] = useState(categories[0])
   const [selectedQuest, setSelectedQuest] = useState(null)
@@ -61,7 +76,10 @@ function Quests() {
         <div className="quests-content-wrapper">
           <h1>{selectedCategory}</h1>
           <div className="quests-content">
-            <QuestsList quests={quests} selectedCategory={selectedCategory} selectedQuest={selectedQuest} setSelectedQuest={setSelectedQuest} />
+            <QuestsList questsByCategory={getQuestsByCategory()}
+              selectedCategory={selectedCategory}
+              selectedQuest={selectedQuest}
+              setSelectedQuest={setSelectedQuest} />
             <QuestDetails quest={selectedQuest} />
           </div>
           <div className="quest-buttons">

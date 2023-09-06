@@ -71,7 +71,12 @@ function QuestForm({ handleClose }) {
             <label htmlFor="title">Quest Name:</label>
             <input type="text" name="title" onChange={onChange}/>
             <label htmlFor="description" onChange={onChange}>Description:</label>
-            <textarea placeholder="Describe the quest..." name="description" style={{resize: "none"}}></textarea>
+            <textarea placeholder="Describe the quest..." 
+            value={questData.description}
+            name="description" 
+            style={{resize: "none"}}
+            onChange={onChange}
+            ></textarea>
           </div>
           <div className="dialog-page">
             <label htmlFor="steps">Steps:</label>
