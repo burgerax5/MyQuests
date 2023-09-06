@@ -6,38 +6,66 @@ import QuestFormHeader from './QuestFormHeader'
 
 function QuestForm({ handleClose }) {
   const defaultQuestData = {
-    category: "",
+    category: "Commissions",
     title: "",
     description: "",
     steps: [],
   }
 
   const [questData, setQuestData] = useState(defaultQuestData)
-  const [showDropdown, setShowDropdown] = useState(false)
+  const [steps, setSteps] = useState([])
 
   const dispatch = useDispatch()
 
   const addStep = () => {
-
+    setSteps(oldSteps => [...oldSteps, ''])
   }
+
+  const onStepChange = (e, index) => {
+    setSteps(oldSteps => {
+      let newSteps = []
+      for (let i = 0; i < steps.length; i++) {
+        if (index == i) {
+          newSteps = [...newSteps, e.target.value]
+        } else {
+          newSteps = [...newSteps, oldSteps[i]]
+        }
+      }
+      return newSteps
+    })
+  }
+
+  useEffect(() => {
+    setQuestData(oldQuestData => ({
+      ...oldQuestData,
+      steps
+    }))
+  }, [steps])
 
   const onChange = (e) => {
     setQuestData(oldQuestData => ({
       ...oldQuestData, 
-      [e.target.name]: e.target.name === "steps" ? [...oldQuestData.steps, e.target.value] : e.target.value
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const changeCategory = (newCategory) => {
+    setQuestData(oldQuestData => ({
+      ...oldQuestData,
+      category: newCategory
     }))
   }
 
   const onSubmit = (e) => {
     e.preventDefault()
     dispatch(createQuest(questData))
-
+    handleClose()
   }
 
   return (
     <>
       <div className="dialog">
-        <QuestFormHeader />
+        <QuestFormHeader selectedCategory={questData.category} setCategory={changeCategory} />
         <form className="dialog-form" onSubmit={onSubmit}>
           <div className="dialog-page">
             <label htmlFor="title">Quest Name:</label>
@@ -47,7 +75,9 @@ function QuestForm({ handleClose }) {
           </div>
           <div className="dialog-page">
             <label htmlFor="steps">Steps:</label>
-            <input type="text" name="steps" onChange={onChange} />
+            { steps.map((step, index) => (
+              <input value={step} type="text" name="steps" onChange={(e) => onStepChange(e, index)} />
+            )) }
             <div className="add-step-btn" onClick={addStep}>
               <FaPlusCircle />
             </div>

@@ -118,12 +118,36 @@
 .quests-content .quests-list {
     display: flex;
     flex-direction: column;
+    width: clamp(300px, 50%, 500px);
+    overflow-y: scroll;
+    padding-right: 0.5rem;
+    gap: 0.5rem;
+}
+
+.quests-content .quest-details {
+    width: 100%;
+    padding: 1rem 2rem;
 }
 
 .quests-list .quest-item {
-    background-color: var(--tertiary);
     padding: 1rem;
     cursor: pointer;
+    position: relative;
+    font-weight: bold;
+    background-color: var(--tertiary);
+}
+
+.quests-list .quest-item.selected {
+    filter: drop-shadow(0px 0px 2px white);
+    background-color: var(--background);
+    color: var(--quarternary-text);
+}
+
+.quests-list .quest-item.selected::before {
+    content: url('../images/caret_right.png');
+    position: absolute;
+    left: -1.75rem;
+    top: 0.75rem;
 }
 
 .quests-container .dialog {
@@ -184,6 +208,24 @@
     width: clamp(250px, 30%, 400px);
     gap: 2rem;
     cursor: pointer;
+    position: relative;
+}
+
+.select-category .category-dropdown {
+    position: absolute;
+    top: 3rem;
+    background-color: var(--background);
+    border: 2px solid var(--secondary);
+    left: 0;
+    width: 100%;
+}
+
+.category-dropdown .category-option {
+    padding: 1rem;
+}
+
+.category-option:hover {
+    background-color: var(--secondary);
 }
 
 .dialog label  {
@@ -287,6 +329,7 @@
         transform: translate(-50%);
         height: fit-content;
         width: 100%;
+        top: 25%;
         padding: 1rem 0.5rem;
         border-width: 0.5rem;
     }
@@ -299,6 +342,14 @@
 }
 
 @media screen and (max-width: 1024px) {
+    .quests-content {
+        flex-direction: column;
+    }
+
+    .quests-content .quests-list {
+        width: 100%;
+    }
+
     .quests-container .dialog-header {
         flex-direction: column;
     }

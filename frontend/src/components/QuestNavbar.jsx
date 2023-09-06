@@ -3,9 +3,9 @@ import '../css/quest.css'
 
 import QuestIcon from '../images/quest_icon.png'
 
-function QuestNavbar({ selected, setSelected }) {
+function QuestNavbar({ selectedCategory, setSelectedCategory }) {
     const onClickHandler = (index) => {
-        setSelected(index)
+        setSelectedCategory(index)
     }
 
     return (
@@ -15,20 +15,20 @@ function QuestNavbar({ selected, setSelected }) {
             </div>
             <ul>
                 <li
-                    className={ `${ selected === 0 ? "selected" : "" }` }
-                    onClick={() => onClickHandler(0)}>A</li>
+                    className={ `${ selectedCategory === 'In Progress' ? "selected" : "" }` }
+                    onClick={() => onClickHandler('In Progress')}>A</li>
                 <li
-                    className={ `${ selected === 1 ? "selected" : "" }` }
-                    onClick={() => onClickHandler(1)}>B</li>
+                    className={ `${ selectedCategory === 'Commissions' ? "selected" : "" }` }
+                    onClick={() => onClickHandler('Commissions')}>B</li>
                 <li
-                    className={ `${ selected === 2 ? "selected" : "" }` }
-                    onClick={() => onClickHandler(2)}>C</li>
+                    className={ `${ selectedCategory === 'World Quests' ? "selected" : "" }` }
+                    onClick={() => onClickHandler('World Quests')}>C</li>
                 <li
-                    className={ `${ selected === 3 ? "selected" : "" }` }
-                    onClick={() => onClickHandler(3)}>D</li>
+                    className={ `${ selectedCategory === 'Main Quests' ? "selected" : "" }` }
+                    onClick={() => onClickHandler('Main Quests')}>D</li>
                 <li
-                    className={ `${ selected === 4 ? "selected" : "" }` }
-                    onClick={() => onClickHandler(4)}>E</li>
+                    className={ `${ selectedCategory === 'Important' ? "selected" : "" }` }
+                    onClick={() => onClickHandler('Important')}>E</li>
             </ul>
         </nav>
     )

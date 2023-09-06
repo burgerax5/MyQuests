@@ -5,8 +5,8 @@ import { getQuests, reset } from '../features/quests/questSlice'
 
 import QuestNavbar from '../components/QuestNavbar'
 import QuestsList from '../components/QuestsList'
+import QuestDetails from '../components/QuestDetails'
 import QuestForm from '../components/QuestForm'
-import QuestItem from '../components/QuestItem'
 import Spinner from '../components/Spinner'
 
 function Quests() {
@@ -17,7 +17,8 @@ function Quests() {
   const { quests, isLoading, isError, message } = useSelector((state) => state.quest)
 
   const categories = ['In Progress', 'Commissions', 'World Quests', 'Main Quests', 'Important']
-  const [selected, setSelected] = useState(0)
+  const [selectedCategory, setSelectedCategory] = useState(categories[0])
+  const [selectedQuest, setSelectedQuest] = useState(null)
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
@@ -36,6 +37,11 @@ function Quests() {
     // }
   }, [user, navigate, isError, message, dispatch])
 
+  useEffect(() => {
+    setSelectedQuest(null)
+    console.log("HUH")
+  }, [selectedCategory])
+
   const handleOpen = () => {
     setShowModal(true)
   }
@@ -51,31 +57,17 @@ function Quests() {
   return (
     <div className="quests-container">
       {user && <>
-        <QuestNavbar selected={selected} setSelected={setSelected} />
+        <QuestNavbar selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
         <div className="quests-content-wrapper">
-          <h1>{categories[selected]}</h1>
-          {quests.length > 0 ? (
-            <>
-              <div className="quests-content">
-                <div className="quests-list">
-                  {quests.map((quest) => (
-                    <QuestItem key={quest._id} quest={quest} />
-                  ))}
-                </div>
-              </div>
-              <div className="quest-buttons">
-                <button onClick={handleOpen}>Add Quest</button>
-                <button>Edit Quest</button>
-              </div>
-            </>
-          ) : (
-            <>
-              <h2>No Quests Available.</h2>
-              <div className="quest-buttons">
-                <button onClick={handleOpen}>Add Quest</button>
-              </div>
-            </>
-          )}
+          <h1>{selectedCategory}</h1>
+          <div className="quests-content">
+            <QuestsList quests={quests} selectedCategory={selectedCategory} selectedQuest={selectedQuest} setSelectedQuest={setSelectedQuest} />
+            <QuestDetails quest={selectedQuest} />
+          </div>
+          <div className="quest-buttons">
+            <button onClick={handleOpen}>Add Quest</button>
+            <button>Edit Quest</button>
+          </div>
         </div>
         {showModal && <QuestForm handleClose={handleClose} />}
       </>}

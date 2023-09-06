@@ -1,9 +1,11 @@
 import React from 'react'
 
-function QuestCategoryDropdown() {
+function QuestCategoryDropdown({ categories, setCategory }) {
     return (
-        <div className="select-options">
-            <div className="category-option"></div>
+        <div className="category-dropdown">
+            {categories.map(category => (
+                <div key={category} className="category-option" onClick={() => setCategory(category)}>{ category }</div>
+            ))}
         </div>
     )
 }
