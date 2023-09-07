@@ -88,6 +88,11 @@
     justify-content: space-between;
 }
 
+.quest-buttons .selected-quest-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
 .quest-buttons button {
     border: none;
     background-color: var(--background);
@@ -143,13 +148,6 @@
     color: var(--quarternary-text);
 }
 
-.quests-list .quest-item.selected::before {
-    content: url('../images/caret_right.png');
-    position: absolute;
-    left: -1.75rem;
-    top: 0.75rem;
-}
-
 .quests-container .dialog {
     position: absolute;
     left: 50%;
@@ -196,6 +194,26 @@
     flex: 1;
     padding: 1rem;
     gap: 1rem;
+}
+
+.dialog-page .step-field {
+    display: flex;
+    background-color: var(--secondary);
+    border-radius: 1rem;
+}
+
+.step-field input {
+    flex: 1;
+}
+
+.step-field .remove-step{
+    padding: 0 1rem;
+    cursor: pointer;
+    color: var(--secondary-text);
+}
+
+.step-field .remove-step:hover {
+    color: var(--quarternary-text);
 }
 
 .dialog-header .select-category {
@@ -329,7 +347,7 @@
         transform: translate(-50%);
         height: fit-content;
         width: 100%;
-        top: 25%;
+        top: 15%;
         padding: 1rem 0.5rem;
         border-width: 0.5rem;
     }

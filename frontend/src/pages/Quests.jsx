@@ -31,6 +31,7 @@ function Quests() {
     return questsByCategory
   }
 
+  const questsByCategory = getQuestsByCategory()
   const categories = ['In Progress', 'Commissions', 'World Quests', 'Main Quests', 'Important']
   const [selectedCategory, setSelectedCategory] = useState(categories[0])
   const [selectedQuest, setSelectedQuest] = useState(null)
@@ -53,8 +54,12 @@ function Quests() {
   }, [user, navigate, isError, message, dispatch])
 
   useEffect(() => {
-    setSelectedQuest(null)
-    console.log("HUH")
+    selectedCategory !== 'In Progress' && questsByCategory[selectedCategory].length > 0 ? (
+      setSelectedQuest(questsByCategory[selectedCategory][0])
+    ) : (
+      setSelectedQuest(null)
+    )
+    // setSelectedQuest(null)
   }, [selectedCategory])
 
   const handleOpen = () => {
@@ -76,7 +81,7 @@ function Quests() {
         <div className="quests-content-wrapper">
           <h1>{selectedCategory}</h1>
           <div className="quests-content">
-            <QuestsList questsByCategory={getQuestsByCategory()}
+            <QuestsList questsByCategory={questsByCategory}
               selectedCategory={selectedCategory}
               selectedQuest={selectedQuest}
               setSelectedQuest={setSelectedQuest} />
@@ -84,7 +89,10 @@ function Quests() {
           </div>
           <div className="quest-buttons">
             <button onClick={handleOpen}>Add Quest</button>
-            <button>Edit Quest</button>
+            <div className="selected-quest-buttons">
+              {selectedQuest && <button>Delete Quest</button>}
+              {selectedQuest && <button>Edit Quest</button>}
+            </div>
           </div>
         </div>
         {showModal && <QuestForm handleClose={handleClose} />}

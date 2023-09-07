@@ -25,7 +25,7 @@ function QuestForm({ handleClose }) {
     setSteps(oldSteps => {
       let newSteps = []
       for (let i = 0; i < steps.length; i++) {
-        if (index == i) {
+        if (index === i) {
           newSteps = [...newSteps, e.target.value]
         } else {
           newSteps = [...newSteps, oldSteps[i]]
@@ -33,6 +33,17 @@ function QuestForm({ handleClose }) {
       }
       return newSteps
     })
+  }
+
+  const removeStep = (index) => {
+    let newSteps = []
+    for (let i = 0; i < steps.length; i++) {
+      if (i !== index) {
+        newSteps.push(steps[i])
+      }
+    }
+    console.log(newSteps)
+    setSteps(newSteps)
   }
 
   useEffect(() => {
@@ -81,7 +92,10 @@ function QuestForm({ handleClose }) {
           <div className="dialog-page">
             <label htmlFor="steps">Steps:</label>
             { steps.map((step, index) => (
-              <input value={step} type="text" name="steps" onChange={(e) => onStepChange(e, index)} />
+              <div className="step-field">
+                <input value={step} type="text" name="steps" onChange={(e) => onStepChange(e, index)} />
+                <div className="remove-step" onClick={() => removeStep(index)}>X</div>
+              </div>
             )) }
             <div className="add-step-btn" onClick={addStep}>
               <FaPlusCircle />
