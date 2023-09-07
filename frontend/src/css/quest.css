@@ -301,6 +301,49 @@
     opacity: 0.35;
 }
 
+.delete-quest-modal {
+    background-color: var(--secondary);
+    width: clamp(200px, 30%, 500px);
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--tertiary-text);
+    z-index: 9999;
+    padding: 2rem;
+}
+
+.delete-quest-modal span {
+    color: var(--secondary-text);
+    font-size: x-large;
+}
+
+.delete-quest-modal .btn-area {
+    margin-top: auto;
+    display: flex;
+    gap: 1rem;
+}
+
+.delete-quest-modal .btn-area button {
+    padding: 0.75rem 3rem;
+    cursor: pointer;
+    border: none;
+    color: var(--quarternary-text);
+    font-weight: bold;
+    background-color: var(--background);
+    border-radius: 2rem;
+}
+
+.delete-quest-modal .btn-area button:hover {
+    filter: drop-shadow(0px 0px 2px var(--tertiary));
+}
+
+
 @keyframes bob {
     0%{
         right: -2.35rem
@@ -378,5 +421,9 @@
 
     .dialog .add-btn {
         width: 100%;
+    }
+
+    .delete-quest-modal .btn-area {
+        flex-direction: column;
     }
 }

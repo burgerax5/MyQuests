@@ -8,6 +8,7 @@ import QuestsList from '../components/QuestsList'
 import QuestDetails from '../components/QuestDetails'
 import QuestForm from '../components/QuestForm'
 import Spinner from '../components/Spinner'
+import QuestDeletePrompt from '../components/QuestDeletePrompt'
 
 function Quests() {
   const navigate = useNavigate()
@@ -36,6 +37,7 @@ function Quests() {
   const [selectedCategory, setSelectedCategory] = useState(categories[0])
   const [selectedQuest, setSelectedQuest] = useState(null)
   const [showModal, setShowModal] = useState(false)
+  const [showDeletePrompt, setShowDeletePrompt] = useState(false)
 
   useEffect(() => {
     if (isError) {
@@ -90,12 +92,15 @@ function Quests() {
           <div className="quest-buttons">
             <button onClick={handleOpen}>Add Quest</button>
             <div className="selected-quest-buttons">
-              {selectedQuest && <button>Delete Quest</button>}
+              {selectedQuest && <button onClick={() => setShowDeletePrompt(true)}>Delete Quest</button>}
               {selectedQuest && <button>Edit Quest</button>}
             </div>
           </div>
         </div>
         {showModal && <QuestForm handleClose={handleClose} />}
+        {showDeletePrompt && <QuestDeletePrompt 
+        selectedQuest={selectedQuest} 
+        handleClose={() => setShowDeletePrompt(false)}/>}
       </>}
     </div>
   )
