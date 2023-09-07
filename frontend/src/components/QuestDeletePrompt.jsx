@@ -1,8 +1,10 @@
 import { useDispatch } from "react-redux"
 import { deleteQuest } from '../features/quests/questSlice'
+import { useNavigate } from "react-router-dom"
 
 function QuestDeletePrompt({ selectedQuest, handleClose }) {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     return (
         <>
@@ -15,6 +17,7 @@ function QuestDeletePrompt({ selectedQuest, handleClose }) {
                         <button onClick={() => {
                             dispatch(deleteQuest(selectedQuest._id))
                             handleClose()
+                            navigate(0)
                         }}>Confirm</button>
                     </div>
                 </div>

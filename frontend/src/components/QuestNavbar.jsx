@@ -1,11 +1,16 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../css/quest.css'
 
 import QuestIcon from '../images/quest_icon.png'
 
 function QuestNavbar({ selectedCategory, setSelectedCategory }) {
-    const onClickHandler = (index) => {
-        setSelectedCategory(index)
+    const navigate = useNavigate()
+
+    const onClickHandler = (category) => {
+        setSelectedCategory(category)
+        // const url_extension = category.toLowerCase().replace(' ', '_')
+        // navigate(`/quests/${url_extension}`)
     }
 
     return (

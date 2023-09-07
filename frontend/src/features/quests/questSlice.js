@@ -34,7 +34,7 @@ export const getQuests = createAsyncThunk('quests/getAll',
     })
 
 // Delete a quest
-export const deleteQuest = createAsyncThunk('quests/delete',
+export const deleteQuest = createAsyncThunk('quests/deleteQuest',
     async (id, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token
