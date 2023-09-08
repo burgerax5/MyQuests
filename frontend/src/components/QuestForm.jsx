@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { FaPlusCircle } from 'react-icons/fa'
-import { createQuest } from '../features/quests/questSlice'
+import { createQuest, editQuest } from '../features/quests/questSlice'
 import QuestFormHeader from './QuestFormHeader'
+import { useNavigate } from 'react-router-dom'
 
-function QuestForm({ handleClose }) {
-  const defaultQuestData = {
-    category: "Commissions",
-    title: "",
-    description: "",
-    steps: [],
-  }
-
-  const [questData, setQuestData] = useState(defaultQuestData)
-  const [steps, setSteps] = useState([])
+function QuestForm({ handleClose, defaultQuestData, operation }) {
+  const { category, title, description, questSteps } = defaultQuestData
+  const [questData, setQuestData] = useState({
+    category, title, description, steps: questSteps
+  })
+  const [steps, setSteps] = useState(defaultQuestData.steps)
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
 
   const addStep = () => {
     setSteps(oldSteps => [...oldSteps, ''])
@@ -42,7 +41,6 @@ function QuestForm({ handleClose }) {
         newSteps.push(steps[i])
       }
     }
-    console.log(newSteps)
     setSteps(newSteps)
   }
 
@@ -69,18 +67,24 @@ function QuestForm({ handleClose }) {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    dispatch(createQuest(questData))
+    if (operation === "Add") {
+      console.log(questData)
+      dispatch(createQuest(questData))
+    } else if (operation === "Edit") {
+      navigate(0)
+      dispatch(editQuest({ questData, id: defaultQuestData._id }))
+    }
     handleClose()
   }
 
   return (
     <>
       <div className="dialog">
-        <QuestFormHeader selectedCategory={questData.category} setCategory={changeCategory} />
+        <QuestFormHeader selectedCategory={questData.category} setCategory={changeCategory} operation={operation} />
         <form className="dialog-form" onSubmit={onSubmit}>
           <div className="dialog-page">
             <label htmlFor="title">Quest Name:</label>
-            <input type="text" name="title" onChange={onChange}/>
+            <input value={questData.title} type="text" name="title" onChange={onChange}/>
             <label htmlFor="description" onChange={onChange}>Description:</label>
             <textarea placeholder="Describe the quest..." 
             value={questData.description}
@@ -103,7 +107,7 @@ function QuestForm({ handleClose }) {
             <button 
               type="submit"
               className="add-btn">
-              Add
+              { operation }
             </button>
           </div>
         </form>

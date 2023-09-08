@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FaCaretDown } from 'react-icons/fa'
 import QuestCategoryDropdown from './QuestCategoryDropdown'
 
-function QuestFormHeader({ selectedCategory, setCategory }) {
+function QuestFormHeader({ selectedCategory, setCategory, operation }) {
     const categories = ['Commissions', 'World Quests', 'Main Quests', 'Important']
     const [showDropdown, setShowDropdown] = useState(false)
 
@@ -12,7 +12,7 @@ function QuestFormHeader({ selectedCategory, setCategory }) {
 
     return (
         <div className="dialog-header">
-            <h2>Add Quest</h2>
+            <h2>{operation} Quest</h2>
             <div className="dialog-header-right">
                 <div className="select-category" onClick={toggleDropdown}>
                     { selectedCategory }

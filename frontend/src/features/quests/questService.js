@@ -41,10 +41,24 @@ const deleteQuest = async (id, token) => {
     return res.data
 }
 
+// Edit a quest
+const editQuest = async (questData, id, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const res = await axios.put(API_URL + id, questData, config)
+
+    return res.data    
+}
+
 const goalService = {
     createQuest,
     getQuests,
-    deleteQuest
+    deleteQuest,
+    editQuest
 }
 
 export default goalService

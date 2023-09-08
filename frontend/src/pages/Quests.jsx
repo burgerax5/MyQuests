@@ -16,7 +16,7 @@ function Quests() {
 
   const { user } = useSelector((state) => state.auth)
   const { quests, isLoading, isError, message } = useSelector((state) => state.quest)
-
+  
   const getQuestsByCategory = () => {
     let questsByCategory = {
       "Commissions": [],
@@ -36,7 +36,8 @@ function Quests() {
   const categories = ['In Progress', 'Commissions', 'World Quests', 'Main Quests', 'Important']
   const [selectedCategory, setSelectedCategory] = useState(categories[0])
   const [selectedQuest, setSelectedQuest] = useState(null)
-  const [showModal, setShowModal] = useState(false)
+  const [showAddModal, setAddShowModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
   const [showDeletePrompt, setShowDeletePrompt] = useState(false)
 
   useEffect(() => {
@@ -65,11 +66,11 @@ function Quests() {
   }, [selectedCategory])
 
   const handleOpen = () => {
-    setShowModal(true)
+    setAddShowModal(true)
   }
 
   const handleClose = () => {
-    setShowModal(false)
+    setAddShowModal(false)
   }
 
   if (isLoading) {
@@ -93,14 +94,28 @@ function Quests() {
             <button onClick={handleOpen}>Add Quest</button>
             <div className="selected-quest-buttons">
               {selectedQuest && <button onClick={() => setShowDeletePrompt(true)}>Delete Quest</button>}
-              {selectedQuest && <button>Edit Quest</button>}
+              {selectedQuest && <button onClick={() => setShowEditModal(true)}>Edit Quest</button>}
             </div>
           </div>
         </div>
-        {showModal && <QuestForm handleClose={handleClose} />}
+        {showAddModal && <QuestForm handleClose={handleClose} 
+        defaultQuestData={{
+          category: "Commissions",
+          title: "",
+          description: "",
+          steps: [],
+        }}
+        operation={"Add"}
+        />}
+
         {showDeletePrompt && <QuestDeletePrompt 
         selectedQuest={selectedQuest} 
         handleClose={() => setShowDeletePrompt(false)}/>}
+
+        {showEditModal && <QuestForm handleClose={() => setShowEditModal(false)}
+        defaultQuestData={selectedQuest}
+        operation={"Edit"}
+        />}
       </>}
     </div>
   )

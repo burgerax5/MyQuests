@@ -46,6 +46,20 @@ export const deleteQuest = createAsyncThunk('quests/deleteQuest',
     })
 
 
+// Edit a quest
+export const editQuest = createAsyncThunk('quests/edit',
+    async (data, thunkAPI) => {
+        const { questData, id } = data
+        try {
+            const token = thunkAPI.getState().auth.user.token
+            return await questService.editQuest(questData, id, token)
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    })
+
+
 export const questSlice = createSlice({
     name: 'quest',
     initialState,
@@ -89,6 +103,24 @@ export const questSlice = createSlice({
                 state.quests = state.quests.filter((quest) => quest._id !== action.payload.id)
             })
             .addCase(deleteQuest.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(editQuest.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(editQuest.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                const updatedQuest = action.payload.quest
+                state.quest = state.quests.map(quest => {
+                    if (quest._id === action.payload.id) {
+                        return updatedQuest
+                    } return quest
+                })
+            })
+            .addCase(editQuest.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
